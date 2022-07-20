@@ -15,7 +15,7 @@ console = new Proxy(firstConsole,{
                 apply(target, thisArg, args){
                     const data = {command,args}
                     send(JSON.stringify(data))
-                    // return target.apply(thisArg,args)
+                    return target.apply(thisArg,args)
                 }
             })
         return consol[command]
@@ -29,13 +29,11 @@ const onCreate = ()=>{
         firstConsole.log("ws",s)
     }
     webSocket.onopen = ()=>{
-        firstConsole.log(buffer)
         while(buffer.length!=0)
             buffer.splice(0,buffer.length).forEach(sendToWS)
         send = sendToWS
     }
     webSocket.onclose = ()=>{
-        firstConsole.log("close")
         send = sendToBuffer
         setTimeout(onCreate, 1000);
     }

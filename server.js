@@ -4,7 +4,7 @@ const WebSocket = require('ws');
 const app = 
 express()
 .set("view engine", "hbs")
-.use("/\?",(req,res)=>{
+.use("/",(req,res)=>{
     const path = req.originalUrl
     if(!path.startsWith("/?")){
         res.end()
@@ -42,6 +42,7 @@ wsServer.on('connection', (client,req)=>{
     }
 
     console.log(theme.users)
+    setInterval(()=>client.send("1"),50000)
     client.on("message",mess=>{
         const msg = mess.toString("utf-8")
         console.log(msg)

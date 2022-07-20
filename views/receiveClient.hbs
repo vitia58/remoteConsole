@@ -4,12 +4,13 @@
         const ws = new WebSocket(`wss://remote-debuger.herokuapp.com/1/${random}/${location.search.substring(1)}`)
         ws.onopen = ()=>{
             ws.onmessage = ({data})=>{
+                if(data=="1")return;
                 const {command,args} = JSON.parse(data)
                 console[command].apply(null,args)
             }
         }
         ws.onclose = ()=>{
-            setTimeout(run, 5000);
+            setTimeout(run, 1000);
         }
     }
     run()
