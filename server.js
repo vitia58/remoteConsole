@@ -11,10 +11,8 @@ express()
         return;
     }
     const ip = req.headers['x-forwarded-for']
-    console.log(ip)
-    // ip = ip.includes("192.168")?"192.168":ip
     res.render("receiveClient.hbs",{
-        rooms:Object.keys(ipThemes[ip]??{})
+        rooms:Object.keys(ipThemes[ip]??{}).filter(e=>ipThemes[ip][e].users.some(u=>!u.isDebuger))
     })
 }).listen(process.env.PORT||9000,()=>{
     console.log("Started")
@@ -23,9 +21,7 @@ express()
 const wsServer = new WebSocket.Server({server:app });
 const ipThemes = {}
 wsServer.on('connection', (client,req)=>{
-    console.log(req)
     const ip = req.headers['x-forwarded-for']
-    // ip = ip.includes("192.168")?"192.168":ip
     const [isDebug,random,tag] = req.url.substring(1).split("/",3)
 
     if(!(ip in ipThemes))Object.assign(ipThemes,{[ip]:{}})
@@ -43,15 +39,14 @@ wsServer.on('connection', (client,req)=>{
         client.send('{"command":"clear","args":[]}')
         theme.messages.forEach(msg=>client.send(msg))
     }
-    console.log(ipThemes)
-    console.log(theme.users)
+    // console.log(ipThemes)
+    // console.log(theme.users)
     setInterval(()=>client.send("1"),50000)
     client.on("message",mess=>{
         const msg = mess.toString("utf-8")
         console.log(msg)
         if(msg=='{"command":"clear","args":[]}'){
             theme.messages.splice(0,theme.length)
-            // console.log(theme.users.map(e=>({rand:e.random,state:e.ws.readyState})))
             theme.users=theme.users.filter(e=>e.ws.readyState==WebSocket.OPEN)
         }
         theme.users.forEach(({ws,buffer,random:rand,isDebuger})=>{
