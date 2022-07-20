@@ -1,5 +1,5 @@
 const WebSocket = require('ws');
-const wsServer = new WebSocket.Server({port: 9001});
+const wsServer = new WebSocket.Server({port: process.env.PORT||9001});
 const ipThemes = {}
 wsServer.on('connection', (client,req)=>{
     let ip = req.socket.remoteAddress
@@ -53,6 +53,6 @@ app.use("/\?",(req,res)=>{
         rooms:Object.keys(ipThemes[ip]??{})
     })
 })
-app.listen(9000,()=>{
+app.listen(process.env.PORT||9000,()=>{
     console.log("Started")
 })
