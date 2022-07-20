@@ -1,6 +1,23 @@
 const express = require("express")
-const app = express()
 const WebSocket = require('ws');
+
+const app = 
+express()
+.set("view engine", "hbs")
+.use("/\?",(req,res)=>{
+    const path = req.originalUrl
+    if(!path.startsWith("/?")){
+        res.end()
+        return;
+    }let ip = req.ip
+    ip = ip.includes("192.168")?"192.168":ip
+    res.render("receiveClient.hbs",{
+        rooms:Object.keys(ipThemes[ip]??{})
+    })
+}).listen(process.env.PORT||9000,()=>{
+    console.log("Started")
+})
+
 const wsServer = new WebSocket.Server({server:app });
 const ipThemes = {}
 wsServer.on('connection', (client,req)=>{
@@ -43,18 +60,3 @@ wsServer.on('connection', (client,req)=>{
 });
 
 
-app.set("view engine", "hbs");
-app.use("/\?",(req,res)=>{
-    const path = req.originalUrl
-    if(!path.startsWith("/?")){
-        res.end()
-        return;
-    }let ip = req.ip
-    ip = ip.includes("192.168")?"192.168":ip
-    res.render("receiveClient.hbs",{
-        rooms:Object.keys(ipThemes[ip]??{})
-    })
-})
-app.listen(process.env.PORT||9000,()=>{
-    console.log("Started")
-})
