@@ -40,7 +40,7 @@ wsServer.on('connection', (client,req)=>{
         client.send('{"command":"clear","args":[]}')
         theme.messages.forEach(msg=>client.send(msg))
     }
-
+    console.log(ipThemes)
     console.log(theme.users)
     setInterval(()=>client.send("1"),50000)
     client.on("message",mess=>{

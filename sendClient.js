@@ -26,7 +26,7 @@ const onCreate = ()=>{
     let webSocket = new WebSocket(`wss://remote-debuger.herokuapp.com/0/${random}/${NAME}`)
     const sendToWS = (s)=>{
         webSocket.send(s)
-        firstConsole.log("ws",s)
+        // firstConsole.log("ws",s)
     }
     webSocket.onopen = ()=>{
         while(buffer.length!=0)
