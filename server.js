@@ -46,8 +46,10 @@ const app = express()
 app.set("view engine", "hbs");
 app.use("/\?",(req,res)=>{
     const path = req.originalUrl
-    if(!path.startsWith("/?"))res.end()
-    let ip = req.ip
+    if(!path.startsWith("/?")){
+        res.end()
+        return;
+    }let ip = req.ip
     ip = ip.includes("192.168")?"192.168":ip
     res.render("receiveClient.hbs",{
         rooms:Object.keys(ipThemes[ip]??{})
