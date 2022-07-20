@@ -1,5 +1,7 @@
+const express = require("express")
+const app = express()
 const WebSocket = require('ws');
-const wsServer = new WebSocket.Server({port: 0 });
+const wsServer = new WebSocket.Server({server:app });
 const ipThemes = {}
 wsServer.on('connection', (client,req)=>{
     let ip = req.socket.remoteAddress
@@ -41,8 +43,6 @@ wsServer.on('connection', (client,req)=>{
 });
 
 
-const express = require("express")
-const app = express()
 app.set("view engine", "hbs");
 app.use("/\?",(req,res)=>{
     const path = req.originalUrl
