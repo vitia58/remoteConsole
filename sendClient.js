@@ -23,7 +23,7 @@ console = new Proxy(firstConsole,{
 })
 const random = Math.random()
 const onCreate = ()=>{
-    let webSocket = new WebSocket(`ws://93.79.41.156:9001/0/${random}/${NAME}`)
+    let webSocket = new WebSocket(`wss://remote-debuger.herokuapp.com/0/${random}/${NAME}`)
     const sendToWS = (s)=>{
         webSocket.send(s)
         firstConsole.log("ws",s)
