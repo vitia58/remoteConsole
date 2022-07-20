@@ -9,12 +9,12 @@ express()
     if(!path.startsWith("/?")){
         res.end()
         return;
-    }let ip = req.remoteAddress
+    }let ip = req.headers
     console.log(ip)
-    ip = ip.includes("192.168")?"192.168":ip
-    res.render("receiveClient.hbs",{
-        rooms:Object.keys(ipThemes[ip]??{})
-    })
+    // ip = ip.includes("192.168")?"192.168":ip
+    // res.render("receiveClient.hbs",{
+    //     rooms:Object.keys(ipThemes[ip]??{})
+    // })
 }).listen(process.env.PORT||9000,()=>{
     console.log("Started")
 })
