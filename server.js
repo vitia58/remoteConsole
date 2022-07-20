@@ -9,7 +9,7 @@ express()
     if(!path.startsWith("/?")){
         res.end()
         return;
-    }let ip = req.ip
+    }let ip = req.remoteAddress
     console.log(ip)
     ip = ip.includes("192.168")?"192.168":ip
     res.render("receiveClient.hbs",{
