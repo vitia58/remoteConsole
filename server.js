@@ -10,6 +10,7 @@ express()
         res.end()
         return;
     }let ip = req.ip
+    console.log(ip)
     ip = ip.includes("192.168")?"192.168":ip
     res.render("receiveClient.hbs",{
         rooms:Object.keys(ipThemes[ip]??{})
