@@ -24,7 +24,7 @@ const wsServer = new WebSocket.Server({server:app });
 const ipThemes = {}
 wsServer.on('connection', (client,req)=>{
     console.log(req)
-    const ip = req.socket.remoteAddress
+    const ip = req.headers['x-forwarded-for']
     // ip = ip.includes("192.168")?"192.168":ip
     const [isDebug,random,tag] = req.url.substring(1).split("/",3)
 
