@@ -1,5 +1,5 @@
 const WebSocket = require('ws');
-const wsServer = new WebSocket.Server({port: 80 });
+const wsServer = new WebSocket.Server({port: 0 });
 const ipThemes = {}
 wsServer.on('connection', (client,req)=>{
     let ip = req.socket.remoteAddress
