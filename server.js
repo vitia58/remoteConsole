@@ -9,12 +9,13 @@ express()
     if(!path.startsWith("/?")){
         res.end()
         return;
-    }let ip = req.headers
+    }
+    const ip = req.headers['x-forwarded-for']
     console.log(ip)
     // ip = ip.includes("192.168")?"192.168":ip
-    // res.render("receiveClient.hbs",{
-    //     rooms:Object.keys(ipThemes[ip]??{})
-    // })
+    res.render("receiveClient.hbs",{
+        rooms:Object.keys(ipThemes[ip]??{})
+    })
 }).listen(process.env.PORT||9000,()=>{
     console.log("Started")
 })
@@ -22,8 +23,9 @@ express()
 const wsServer = new WebSocket.Server({server:app });
 const ipThemes = {}
 wsServer.on('connection', (client,req)=>{
-    let ip = req.socket.remoteAddress
-    ip = ip.includes("192.168")?"192.168":ip
+    console.log(req)
+    const ip = req.socket.remoteAddress
+    // ip = ip.includes("192.168")?"192.168":ip
     const [isDebug,random,tag] = req.url.substring(1).split("/",3)
 
     if(!(ip in ipThemes))Object.assign(ipThemes,{[ip]:{}})
