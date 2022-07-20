@@ -1,0 +1,17 @@
+{
+  "name": "remoteconsole",
+  "version": "1.0.0",
+  "description": "remote console client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vitia",
+  "license": "ISC",
+  "dependencies": {
+    "@types/ws": "^8.5.3",
+    "express": "^4.18.1",
+    "hbs": "^4.2.0",
+    "ws": "^8.8.1"
+  }
+}

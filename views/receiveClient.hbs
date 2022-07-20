@@ -1,0 +1,22 @@
+<script>
+    const random = Math.random()
+    const run = ()=>{
+        const ws = new WebSocket(`ws://93.79.41.156:9001/1/${random}/${location.search.substring(1)}`)
+        ws.onopen = ()=>{
+            ws.onmessage = ({data})=>{
+                const {command,args} = JSON.parse(data)
+                console[command].apply(null,args)
+            }
+        }
+        ws.onclose = ()=>{
+            setTimeout(run, 5000);
+        }
+    }
+    run()
+</script>
+<h1>Rooms:</h1>
+<ul>
+    {{#each rooms}}
+        <li><h2><a href="?{{this}}">{{this}}</a></h2></li>
+    {{/each}}
+</ul>
